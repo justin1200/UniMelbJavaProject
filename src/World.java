@@ -2,7 +2,7 @@
  * (Semester 2) by Justin Aaron Kelley (997351). */
 
 /* Class used to handle functionality for loading in actors from world file,
- * adding them to the image and updating their functionality.*/
+ * adding them to the image and updating their states.*/
 
 import java.util.ArrayList;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class World {
     // Stores actors loaded from world (test.csv) file.
-    private ArrayList<Actor> actors;
+    private final ArrayList<Actor> actors;
 
     // Constructor for Class.
     public World() {
@@ -23,8 +23,10 @@ public class World {
         return actors;
     }
 
+
+
     // Function to read actor data from file, filename.
-    public void readFile(String filename) {
+    public final void readFile(String filename) {
 
         // Line number.
         int lineNum = 0;
@@ -32,6 +34,8 @@ public class World {
         // Read in file.
         try (BufferedReader br =
                      new BufferedReader(new FileReader(filename))) {
+
+            // Read file line by line.
             String text;
             while ((text = br.readLine()) != null) {
                 lineNum++;
@@ -41,19 +45,23 @@ public class World {
                     if (cells.length != 3) {
                         printError(filename, lineNum);
                     } else {
+                        // Create actor based on file information on each line.
                         createActor(filename, lineNum, cells);
                     }
+                    // Print error message in case of error on a line.
                 } catch (Exception e) {
                     e.printStackTrace();
                     printError(filename, lineNum);
                 }
-
             }
+
+            // Print error message if error in loading file or file not found.
         } catch (Exception e) {
             System.out.println("error: file " + filename +  " not found");
             System.exit(-1);
         }
     }
+
 
     // Method to print error for file line.
     private void printError(String filename, int lineNum) {
@@ -61,53 +69,72 @@ public class World {
         System.exit(-1);
     }
 
+
     // Add objects that were read from file into the 2D image.
-    public void addActors() {
+    public final void addActors() {
         for (Actor actor: this.actors) {
-            actor.Add();
+            actor.add();
         }
     }
 
-    // Create actor for the correct class.
-    private void createActor(String filename, int lineNum, String cells[]) {
+
+    // Creates actor for the correct class.
+    private void createActor(String filename, int lineNum, String[] cells) {
         // Get coordinates.
         int x = Integer.parseInt(cells[1]);
         int y = Integer.parseInt(cells[2]);
 
-        // Add correct class to list.
-        if (cells[0].equals("Tree")) {
-            actors.add(new Tree(x, y, 3, false));
-        } else if (cells[0].equals("GoldenTree")) {
-            actors.add(new Tree(x, y, Storage.INFINITE, true));
-        } else if (cells[0].equals("Fence")) {
-            actors.add(new Fence(x, y));
-        } else if (cells[0].equals("Pad")) {
-            actors.add(new Pad(x, y));
-        } else if (cells[0].equals("SignDown")) {
-            actors.add(new Sign(x, y, Mover.DOWN));
-        } else if (cells[0].equals("SignUp")) {
-            actors.add(new Sign(x, y, Mover.UP));
-        } else if (cells[0].equals("SignRight")) {
-            actors.add(new Sign(x, y, Mover.RIGHT));
-        } else if (cells[0].equals("SignLeft")) {
-            actors.add(new Sign(x, y, Mover.LEFT));
-        } else if (cells[0].equals("Hoard")) {
-            actors.add(new Hoard(x, y));
-        } else if (cells[0].equals("Stockpile")) {
-            actors.add(new Stockpile(x, y));
-        } else if (cells[0].equals("Thief")) {
-            actors.add(new Thief(x, y));
-        } else if (cells[0].equals("Gatherer")) {
-            actors.add(new Gatherer(x, y));
-        } else if (cells[0].equals("MitosisPool")) {
-            actors.add(new MitosisPool(x, y));
-        } else {
-            printError(filename, lineNum);
+        // Add correct class to list. Otherwise print error message.
+        switch (cells[0]) {
+            case "Tree":
+                actors.add(new Tree(x, y, 3, false));
+                break;
+            case "GoldenTree":
+                actors.add(new Tree(x, y, Storage.INFINITE, true));
+                break;
+            case "Fence":
+                actors.add(new Fence(x, y));
+                break;
+            case "Pad":
+                actors.add(new Pad(x, y));
+                break;
+            case "SignDown":
+                actors.add(new Sign(x, y, Mover.DOWN));
+                break;
+            case "SignUp":
+                actors.add(new Sign(x, y, Mover.UP));
+                break;
+            case "SignRight":
+                actors.add(new Sign(x, y, Mover.RIGHT));
+                break;
+            case "SignLeft":
+                actors.add(new Sign(x, y, Mover.LEFT));
+                break;
+            case "Hoard":
+                actors.add(new Hoard(x, y));
+                break;
+            case "Stockpile":
+                actors.add(new Stockpile(x, y));
+                break;
+            case "Thief":
+                actors.add(new Thief(x, y));
+                break;
+            case "Gatherer":
+                actors.add(new Gatherer(x, y));
+                break;
+            case "MitosisPool":
+                actors.add(new MitosisPool(x, y));
+                break;
+            default:
+                printError(filename, lineNum);
+                break;
         }
     }
 
-    // Update the status for the simulation each tick.
-    public void updateActors() {
+
+
+    // Updates the status of the actors for the simulation each tick.
+    public final void updateActors() {
         for (Actor actor: this.actors) {
             if (actor instanceof Mover) {
                 ((Mover) actor).updateStatus(this);
@@ -115,9 +142,14 @@ public class World {
         }
     }
 
-    public void checkStatus(int numTicks) {
+
+    // To check if all actors are inactive.
+    public final void checkStatus(int numTicks) {
+
         Mover mover;
         boolean finished = true;
+
+        // Checks if any actors are still active.
         for (Actor actor: actors) {
             if (actor instanceof Mover) {
                 mover = (Mover) actor;
@@ -127,20 +159,30 @@ public class World {
                 }
             }
         }
+
+        // Print summary if all actors are inactive.
         if (finished) {
             printSummary(numTicks);
         }
     }
 
+
+    // Prints a summary of the simulation once finished.
     private void printSummary(int numTicks) {
         Storage storage;
-        System.out.println(numTicks + "ticks");
+
+        // Print out number of ticks that have passed.
+        System.out.println((numTicks - 1) + " ticks");
+
+        // For each Stockpile or Hoard, print out the number of fruits in each one.
         for (Actor actor: actors) {
             if (actor instanceof Stockpile || actor instanceof Hoard) {
                 storage = (Storage) actor;
                 System.out.println(storage.getFruit());
             }
         }
+
+        // Exit program.
         System.exit(0);
     }
 }

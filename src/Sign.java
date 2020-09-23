@@ -8,7 +8,7 @@ import bagel.Image;
 public class Sign extends Actor{
 
     // Direction sign is facing.
-    private int direction;
+    private final int direction;
 
     // Constructor for Sign.
     public Sign(int x, int y, int direction) {
@@ -27,6 +27,13 @@ public class Sign extends Actor{
         }
     }
 
+    // Default constructor for sign.
+    public Sign() {
+        super(0, 0);
+        this.direction = Mover.UP;
+    }
+
+    // Getter for direction.
     public int getDirection() {
         return direction;
     }

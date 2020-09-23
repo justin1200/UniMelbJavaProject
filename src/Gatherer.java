@@ -15,13 +15,55 @@ public class Gatherer extends Mover {
         this.setDirection(direction);
     }
 
+    public Gatherer() {
+        super(0, 0, "res/images/gatherer.png", LEFT);
+    }
+
     @Override
     public void updateStatus(World world) {
+
+        // Get actors that are on the same tile.
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
 
-        if (instanceInList(actorsInTile, new MitosisPool())) {
-            this.onPool();
+        // Check if Gatherer on a Mitosis Pool. Delete it and create two new ones if so.
+        if (this.onPoolOrSign(world, actorsInTile)) {
             return;
+        }
+
+        // Check if the Gatherer is on a tree.
+        Actor actor;
+        actor = instanceInList(actorsInTile, new Tree());
+        if (actor != null && !this.isCarrying()) {
+            Tree tree = (Tree) actor;
+            if (tree.getFruit() > 0 || tree.isGolden()) {
+                if (!tree.isGolden()) {
+                    tree.setFruit(tree.getFruit() - 1);
+                }
+                this.setCarrying(true);
+                this.setDirection((this.getDirection() + 2) % 4);
+            }
+        }
+
+        actor = instanceInList(actorsInTile, new Stockpile());
+        if (actor == null) {
+            actor = instanceInList(actorsInTile, new Hoard());
+        }
+        if (actor != null && this.isCarrying()) {
+            this.setCarrying(false);
+            Storage storage = (Storage) actor;
+            storage.setFruit(storage.getFruit() + 1);
+            this.setDirection((this.getDirection() + 2) % 4);
+        }
+
+        // If Gatherer is on a fence. Set it to inactive and move to previous position.
+        actor = instanceInList(actorsInTile, new Fence());
+        if (actor != null) {
+            this.onFence();
+        }
+
+        // Move Gatherer forward if active.
+        if (this.isActive()) {
+            moveForward();
         }
     }
 

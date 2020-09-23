@@ -5,6 +5,7 @@
 
 public class Background extends Actor {
 
+    // Constructor for Background.
     public Background() {
         super(0, 0, "res/images/background.png");
     }

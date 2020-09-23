@@ -7,6 +7,7 @@ import bagel.Font;
 
 public abstract class Storage extends Actor{
 
+    // Constant to represent infinity.
     protected final static int INFINITE = -1;
 
     // Fruit held by storage place.
@@ -27,10 +28,11 @@ public abstract class Storage extends Actor{
         this.fruit = fruit;
     }
 
-
+    // Changes add() method to add image of the Tree, Stockpile or Hoard to the graphical display with
+    // an included number showing how much fruit it has.
     @Override
-    public void Add() {
-        super.Add();
+    public final void add() {
+        super.add();
         Font font = new Font("res/VeraMono.ttf", 18);
         if (fruit != INFINITE) {
             font.drawString(String.valueOf(fruit),

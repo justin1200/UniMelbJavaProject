@@ -5,12 +5,12 @@
 
 public class MitosisPool extends Actor {
 
+    // Detailed and default constructor for MitosisPool.
     public MitosisPool(int x, int y) {
         super(x, y, "res/images/pool.png");
     }
 
     public MitosisPool() {
         super(0, 0, "res/images/pool.png");
-
     }
 }

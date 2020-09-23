@@ -7,8 +7,14 @@ import bagel.Image;
 
 public class Stockpile extends Storage {
 
+    // Detailed and default constructors for Stockpile.
     public Stockpile(int x, int y) {
         super(x, y, 0);
+        this.setImage(new Image("res/images/cherries.png"));
+    }
+
+    public Stockpile() {
+        super(0, 0, 0);
         this.setImage(new Image("res/images/cherries.png"));
     }
 }

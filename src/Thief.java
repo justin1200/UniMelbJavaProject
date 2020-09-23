@@ -23,6 +23,69 @@ public class Thief extends Mover {
     @Override
     public void updateStatus(World world) {
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
+        ArrayList<Mover> newThieves;
+        Actor actor = instanceInList(actorsInTile, new MitosisPool());
+
+        if (actor != null) {
+            newThieves = this.onPool();
+            world.getActors().add(newThieves.get(0));
+            world.getActors().add(newThieves.get(1));
+            world.getActors().remove(this);
+            return;
+        }
+
+        actor = instanceInList(actorsInTile, new Sign());
+        if (actor != null) {
+            this.onSign((Sign) actor);
+        }
+
+        actor = instanceInList(actorsInTile, new Pad());
+        if (actor != null) {
+            this.consuming = true;
+        }
+        actor = instanceInList(actorsInTile, new Gatherer());
+        if (actor != null) {
+            this.setDirection((this.getDirection() + 4 - 1) % 4);
+        }
+
+        actor = instanceInList(actorsInTile, new Hoard());
+        if (actor != null) {
+            Hoard hoard = (Hoard) actor;
+            if (consuming) {
+                this.consuming = false;
+                if (!this.isCarrying()) {
+                    if (hoard.getFruit() > 0) {
+                        this.setCarrying(true);
+                        hoard.setFruit(hoard.getFruit() - 1);
+                    } else {
+                        this.setDirection((this.getDirection() + 1) % 4);
+                    }
+                }
+            } else if (this.isCarrying()) {
+                this.setCarrying(false);
+                hoard.setFruit(hoard.getFruit() + 1);
+            }
+        }
+
+        actor = instanceInList(actorsInTile, new Stockpile());
+        if (actor != null) {
+            Stockpile stockpile = (Stockpile) actor;
+            if (!this.isCarrying() && stockpile.getFruit() > 0) {
+                this.setCarrying(true);
+                this.consuming = false;
+                stockpile.setFruit(stockpile.getFruit() - 1);
+            }
+            this.setDirection((this.getDirection() + 1) % 4);
+        }
+
+        actor = instanceInList(actorsInTile, new Fence());
+        if (actor != null) {
+            this.onFence();
+        }
+
+        if (this.isActive()) {
+            moveForward();
+        }
     }
 
     @Override

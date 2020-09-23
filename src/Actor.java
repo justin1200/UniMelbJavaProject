@@ -12,21 +12,20 @@ public abstract class Actor {
     protected static final int TILE_LENGTH = 64;
 
     // Coordinate for actor and the image representation for them.
-    private Coordinate coordinate;
+    private final Coordinate coordinate;
     private Image image;
-    private boolean status;
+
 
     // Constructors for Actors.
     public Actor(int x, int y, String image) {
         this.coordinate = new Coordinate(x, y);
         this.image = new Image(image);
-        this.status = true;
     }
 
     public Actor(int x, int y) {
         this.coordinate = new Coordinate(x, y);
-        this.status = true;
     }
+
 
     // Getter and setters for coordinates.
     public final Coordinate getCoordinate() {
@@ -41,34 +40,16 @@ public abstract class Actor {
         this.coordinate.setY(y);
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
 
-    // Getter and setter for image.
-    public Image getImage() {
-        return image;
-    }
-
+    // Setter for image.
     public void setImage(Image image) {
         this.image = image;
     }
 
-    // Getter and setter for status.
-    public boolean isStatus() {
-        return status;
-    }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    // Adds an actor's image representation to the 2D graphical image.
+    public void add() {
+        this.image.drawFromTopLeft((int) (this.coordinate.getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH,
+                (int) (this.coordinate.getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
     }
-
-    // Adds an actor's image representation to the 2D graphical image if status is active.
-    public void Add() {
-        if (status) {
-            this.image.drawFromTopLeft((int) (this.coordinate.getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH,
-                    (int) (this.coordinate.getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
-        }
-    }
-
 }
