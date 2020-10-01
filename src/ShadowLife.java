@@ -72,7 +72,7 @@ public class ShadowLife extends AbstractGame {
 
 
     // Check for valid commandline input.
-    public static boolean isValidCommandline(String[] args) {
+    private static boolean isValidCommandline(String[] args) {
         // Checker for validity.
         boolean valid = true;
 

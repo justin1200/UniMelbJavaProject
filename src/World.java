@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class World {
+
     // Stores actors loaded from world (test.csv) file.
     private final ArrayList<Actor> actors;
 
@@ -135,10 +136,44 @@ public class World {
 
     // Updates the status of the actors for the simulation each tick.
     public final void updateActors() {
+
+        // Tracks any newly created movers.
+        ArrayList<Mover> newMovers = new ArrayList<Mover>(), newMoversTemp;
+
+        // Update status for gatherers.
         for (Actor actor: this.actors) {
-            if (actor instanceof Mover) {
-                ((Mover) actor).updateStatus(this);
+            if (actor instanceof Gatherer) {
+                newMoversTemp = ((Mover) actor).updateStatus(this);
+
+                // Add newly created movers to a list.
+                if (newMoversTemp != null) {
+                    newMovers.addAll(newMoversTemp);
+                }
             }
+        }
+
+        // Update status for thieves.
+        for (Actor actor: this.actors) {
+            if (actor instanceof Thief) {
+                newMoversTemp = ((Mover) actor).updateStatus(this);
+
+                // Add newly created movers to a list.
+                if (newMoversTemp != null) {
+                    newMovers.addAll(newMoversTemp);
+                }
+            }
+        }
+
+        // Delete any actors marked for it.
+        for (int i = 0; i < actors.size(); i++) {
+            if (actors.get(i).isMarkForDelete()) {
+                actors.remove(actors.get(i));
+            }
+        }
+
+        // Add newly created movers to the simulation.
+        if (newMovers.size() > 0) {
+            this.actors.addAll(newMovers);
         }
     }
 
@@ -172,7 +207,7 @@ public class World {
         Storage storage;
 
         // Print out number of ticks that have passed.
-        System.out.println((numTicks - 1) + " ticks");
+        System.out.println(numTicks + " ticks");
 
         // For each Stockpile or Hoard, print out the number of fruits in each one.
         for (Actor actor: actors) {

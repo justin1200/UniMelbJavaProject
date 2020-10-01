@@ -120,52 +120,74 @@ public abstract class Mover extends Actor{
 
 
     // Method that is used to update the state for a Mover.
-    public abstract void updateStatus(World world);
+    public abstract ArrayList<Mover> updateStatus(World world);
 
-    // Change Mover's direction to the sign's direction.
-    protected void onSign(Sign sign) {
-        this.direction = sign.getDirection();
-    }
 
-    // Set the Mover to inactive if on a fence.
-    protected void onFence() {
-        this.active = false;
-        this.getCoordinate().setX(this.getPrevCoordinate().getX());
-        this.getCoordinate().setY(this.getPrevCoordinate().getY());
-    }
+    // To delete current Mover and create two more of the same class if the Mover lands on a Mitosis Pool.
+    protected abstract ArrayList<Mover> onPool();
 
-    // Move the Mover forward updating previous position.
-    protected void moveForward() {
+    // To move a Mover forward.
+    public void moveForward() {
         this.getPrevCoordinate().setX(this.getCoordinate().getX());
         this.getPrevCoordinate().setY(this.getCoordinate().getY());
         this.move();
     }
 
-    // To delete current Mover and create two more of the same class if the Mover lands on a Mitosis Pool.
-    protected abstract ArrayList<Mover> onPool();
-
     // To update state of Mover if they are on a pool or a sign. Returns true if on a Mitosis Pool.
-    protected boolean onPoolOrSign(World world, ArrayList<Actor> actorsInTile) {
+    protected ArrayList<Mover> checkCommonMoverBehaviour(World world) {
 
-        ArrayList<Mover> newMover;
-        Actor actor = instanceInList(actorsInTile, new MitosisPool());
-
-        // Check if Actor is a Mitosis Pool. If so, add two new Movers of the class of the Mover and delete
-        // the Mover.
-        if (actor != null) {
-            newMover = this.onPool();
-            world.getActors().add(newMover.get(0));
-            world.getActors().add(newMover.get(1));
-            world.getActors().remove(this);
-            return true;
+        // Move the Mover forward if active.
+        if (this.isActive()) {
+            moveForward();
         }
+
+        // Get actors that are on the same tile.
+        ArrayList<Actor> actorsInTile = getActorsInTile(world);
+
+
+        // If Gatherer is on a fence. Set it to inactive and move to previous position.
+        Actor actor = instanceInList(actorsInTile, new Fence());
+        if (actor != null) {
+            this.active = false;
+            this.getCoordinate().setX(this.getPrevCoordinate().getX());
+            this.getCoordinate().setY(this.getPrevCoordinate().getY());
+        }
+
+
+        // Check if the Mover is on a Mitosis Pool. If so, add two new Movers of the same class of the Mover and delete
+        // the Mover.
+        ArrayList<Mover> newMovers;
+        actor = instanceInList(actorsInTile, new MitosisPool());
+
+        if (actor != null) {
+            newMovers = this.onPool();
+            return newMovers;
+        }
+
 
         // Check if Mover lands on a sign. Update direction to Sign's direction if so.
         actor = instanceInList(actorsInTile, new Sign());
         if (actor != null) {
-            this.onSign((Sign) actor);
+            this.direction = ((Sign) actor).getDirection();
         }
-        return false;
+
+
+        // Check if the Mover is on a tree and can pick up a fruit.
+        actor = instanceInList(actorsInTile, new Tree());
+        if (actor != null && !this.isCarrying()) {
+            Tree tree = (Tree) actor;
+            // Take a fruit from a tree if it has any.
+            if (tree.getFruit() > 0 || tree.isGolden()) {
+                if (!tree.isGolden()) {
+                    tree.setFruit(tree.getFruit() - 1);
+                }
+                this.setCarrying(true);
+                if (this instanceof Gatherer) {
+                    this.setDirection((this.getDirection() + 2) % 4);
+                }
+            }
+        }
+        return null;
     }
 }
 

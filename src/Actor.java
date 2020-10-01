@@ -11,6 +11,9 @@ public abstract class Actor {
     // Constant for tile length.
     protected static final int TILE_LENGTH = 64;
 
+    // Marks if Actor is to be deleted.
+    private boolean markForDelete;
+
     // Coordinate for actor and the image representation for them.
     private final Coordinate coordinate;
     private Image image;
@@ -20,6 +23,7 @@ public abstract class Actor {
     public Actor(int x, int y, String image) {
         this.coordinate = new Coordinate(x, y);
         this.image = new Image(image);
+        this.markForDelete = false;
     }
 
     public Actor(int x, int y) {
@@ -44,6 +48,16 @@ public abstract class Actor {
     // Setter for image.
     public void setImage(Image image) {
         this.image = image;
+    }
+
+
+    // Getter and setter for markForDelete.
+    public boolean isMarkForDelete() {
+        return markForDelete;
+    }
+
+    public void setMarkForDelete(boolean markForDelete) {
+        this.markForDelete = markForDelete;
     }
 
 
