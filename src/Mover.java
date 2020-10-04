@@ -1,7 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- * Super class to represent actors that can move around.
- */
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
 
 import java.util.ArrayList;
 
@@ -101,7 +101,7 @@ public abstract class Mover extends Actor{
 
         // Find what actors are in the same tile.
         for (Actor actor: world.getActors()) {
-            if (withinTile(actor)) {
+            if (withinTile(actor) && !actor.isMarkedForDelete()) {
                 actorsInSameTile.add(actor);
             }
         }
@@ -120,11 +120,11 @@ public abstract class Mover extends Actor{
 
 
     // Method that is used to update the state for a Mover.
-    public abstract ArrayList<Mover> updateStatus(World world);
+    public abstract void updateStatus(World world);
 
 
     // To delete current Mover and create two more of the same class if the Mover lands on a Mitosis Pool.
-    protected abstract ArrayList<Mover> onPool();
+    protected abstract void onPool(World world);
 
     // To move a Mover forward.
     public void moveForward() {
@@ -134,7 +134,7 @@ public abstract class Mover extends Actor{
     }
 
     // To update state of Mover if they are on a pool or a sign. Returns true if on a Mitosis Pool.
-    protected ArrayList<Mover> checkCommonMoverBehaviour(World world) {
+    protected void checkCommonMoverBehaviour(World world) {
 
         // Move the Mover forward if active.
         if (this.isActive()) {
@@ -160,8 +160,7 @@ public abstract class Mover extends Actor{
         actor = instanceInList(actorsInTile, new MitosisPool());
 
         if (actor != null) {
-            newMovers = this.onPool();
-            return newMovers;
+            this.onPool(world);
         }
 
 
@@ -187,7 +186,6 @@ public abstract class Mover extends Actor{
                 }
             }
         }
-        return null;
     }
 }
 

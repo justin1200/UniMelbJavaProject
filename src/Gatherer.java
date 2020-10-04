@@ -1,7 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- * Class to represent a gatherer.
- */
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
 
 import java.util.ArrayList;
 
@@ -24,18 +24,17 @@ public class Gatherer extends Mover {
 
     // Method for running Algorithm 2 to update the state of a Gatherer every tick.
     @Override
-    public ArrayList<Mover> updateStatus(World world) {
+    public void updateStatus(World world) {
 
         // Check if Gatherer is to move forward, is on a Mitosis Pool, Fence or Sign. Update accordingly.
-        ArrayList<Mover> newMovers = this.checkCommonMoverBehaviour(world);
+        this.checkCommonMoverBehaviour(world);
 
         // Get actors that are on the same tile.
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
 
         // If Gatherer on a Mitosis Pool delete it.
-        if (newMovers != null) {
-            this.setMarkForDelete(true);
-            return newMovers;
+        if (world.getNewMovers().size() != 0) {
+            this.setMarkedForDelete(true);
         }
 
 
@@ -53,14 +52,12 @@ public class Gatherer extends Mover {
             storage.setFruit(storage.getFruit() + 1);
             this.setDirection((this.getDirection() + 2) % 4);
         }
-
-        return null;
     }
 
 
     // Method for running logic for landing on a Mitosis Pool. Create two new gatherers and delete this one.
     @Override
-    protected ArrayList<Mover> onPool() {
+    protected void onPool(World world) {
 
         // Stores any newly created gatherers.
         ArrayList<Mover> movers = new ArrayList<Mover>();
@@ -76,9 +73,8 @@ public class Gatherer extends Mover {
         gatherer1.moveForward();
         gatherer2.moveForward();
 
-        // Add the new gatherers to a list to be added to simulation after each other Actor has been updated.
-        movers.add(gatherer1);
-        movers.add(gatherer2);
-        return movers;
+        // Add the new gatherers to the simulation.
+        world.getNewMovers().add(gatherer1);
+        world.getNewMovers().add(gatherer2);
     }
 }

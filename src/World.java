@@ -1,18 +1,19 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351). */
-
-/* Class used to handle functionality for loading in actors from world file,
- * adding them to the image and updating their states.*/
-
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
+import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 public class World {
 
     // Stores actors loaded from world (test.csv) file.
     private final ArrayList<Actor> actors;
+
+    // Stores any newly created movers,
+    private ArrayList<Mover> newMovers;
 
     // Constructor for Class.
     public World() {
@@ -24,7 +25,14 @@ public class World {
         return actors;
     }
 
+    // Getter and setter for newMovers.
+    public ArrayList<Mover> getNewMovers() {
+        return newMovers;
+    }
 
+    public void setNewMovers(ArrayList<Mover> newMovers) {
+        this.newMovers = newMovers;
+    }
 
     // Function to read actor data from file, filename.
     public final void readFile(String filename) {
@@ -40,33 +48,29 @@ public class World {
             String text;
             while ((text = br.readLine()) != null) {
                 lineNum++;
-                try {
-                    // Split cells in csv file and check for right length.
-                    String[] cells = text.split(",");
-                    if (cells.length != 3) {
-                        printError(filename, lineNum);
-                    } else {
-                        // Create actor based on file information on each line.
-                        createActor(filename, lineNum, cells);
-                    }
-                    // Print error message in case of error on a line.
-                } catch (Exception e) {
-                    e.printStackTrace();
+                // Split cells in csv file and check for right length.
+                String[] cells = text.split(",");
+                if (cells.length != 3) {
                     printError(filename, lineNum);
+                } else {
+                    // Create actor based on file information on each line.
+                    createActor(filename, lineNum, cells);
                 }
             }
 
-            // Print error message if error in loading file or file not found.
-        } catch (Exception e) {
-            System.out.println("error: file " + filename +  " not found");
+            // Print error message if error in loading file, file not found or a line contains an error.
+        } catch (IOException e1) {
+            System.out.println("error: file \"" + filename +  "\" not found");
             System.exit(-1);
+        } catch (Exception e2) {
+            printError(filename, lineNum);
         }
     }
 
 
     // Method to print error for file line.
     private void printError(String filename, int lineNum) {
-        System.out.println("error: in file " + filename + " at line " + lineNum);
+        System.out.println("error: in file \"" + filename + "\" at line " + lineNum);
         System.exit(-1);
     }
 
@@ -133,47 +137,43 @@ public class World {
     }
 
 
+    // Updates the status for a specific subtype of Mover.
+    private void updateSpecificMoverType(Object o, int length) {
+
+        Actor actor;
+
+        // Update status for the Mover.
+        for (int i = 0; i < length; i++) {
+            this.newMovers = new ArrayList<Mover>();
+            actor = this.actors.get(i);
+
+            // Update status of the Mover if it is of this specific subtype.
+            if (actor.getClass() == o.getClass()) {
+                ((Mover) actor).updateStatus(this);
+
+                // Add newly created movers to the simulation.
+                if (this.newMovers.size() != 0) {
+                    this.actors.addAll(this.newMovers);
+                }
+            }
+        }
+    }
 
     // Updates the status of the actors for the simulation each tick.
     public final void updateActors() {
 
-        // Tracks any newly created movers.
-        ArrayList<Mover> newMovers = new ArrayList<Mover>(), newMoversTemp;
+        // Get number of current actors.
+        int length = this.actors.size();
 
-        // Update status for gatherers.
-        for (Actor actor: this.actors) {
-            if (actor instanceof Gatherer) {
-                newMoversTemp = ((Mover) actor).updateStatus(this);
-
-                // Add newly created movers to a list.
-                if (newMoversTemp != null) {
-                    newMovers.addAll(newMoversTemp);
-                }
-            }
-        }
-
-        // Update status for thieves.
-        for (Actor actor: this.actors) {
-            if (actor instanceof Thief) {
-                newMoversTemp = ((Mover) actor).updateStatus(this);
-
-                // Add newly created movers to a list.
-                if (newMoversTemp != null) {
-                    newMovers.addAll(newMoversTemp);
-                }
-            }
-        }
+        // Update simulation for Gatherers and then Thieves.
+        this.updateSpecificMoverType(new Gatherer(), length);
+        this.updateSpecificMoverType(new Thief(), length);
 
         // Delete any actors marked for it.
         for (int i = 0; i < actors.size(); i++) {
-            if (actors.get(i).isMarkForDelete()) {
+            if (actors.get(i).isMarkedForDelete()) {
                 actors.remove(actors.get(i));
             }
-        }
-
-        // Add newly created movers to the simulation.
-        if (newMovers.size() > 0) {
-            this.actors.addAll(newMovers);
         }
     }
 

@@ -1,7 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- * Class to represent a pad.
- */
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
 
 public class Pad extends Actor{
 

@@ -1,6 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- * This is the main driver class to run ShadowLife. */
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
 
 import bagel.AbstractGame;
 import bagel.Input;
@@ -23,7 +24,12 @@ public class ShadowLife extends AbstractGame {
     private final World world;
 
 
-    // Constructor for simulation of ShadowLife.
+
+    /**
+     * Constructor to generate a simulation for ShadowLife.
+     * @param args This stores the commandline input for tick rate (int),
+     *             maximum number of ticks (int) and file to read (String).
+     */
     public ShadowLife(String[] args) {
         // Set window.
         super(WIDTH, HEIGHT);
@@ -39,6 +45,7 @@ public class ShadowLife extends AbstractGame {
         tickerCount = 0;
         time = 0;
     }
+
 
 
     // Updates the simulation over time.
@@ -71,8 +78,10 @@ public class ShadowLife extends AbstractGame {
     }
 
 
+
     // Check for valid commandline input.
     private static boolean isValidCommandline(String[] args) {
+
         // Checker for validity.
         boolean valid = true;
 
@@ -81,7 +90,7 @@ public class ShadowLife extends AbstractGame {
             valid = false;
         }
 
-        // Check for valid input for ticker rate and maximum number of ticks.
+        // Check that input for ticker rate and maximum number of ticks are non-negative integers.
         try {
             if (Integer.parseInt(args[0]) < 0) {
                 valid = false;
@@ -89,15 +98,13 @@ public class ShadowLife extends AbstractGame {
                 valid = false;
             }
             // Print out error for invalid input.
-        } catch (Exception e) {
-            System.out.println("usage: ShadowLife <tick rate> <max ticks> <world file>");
-            System.exit(-1);
+        } catch (NumberFormatException e) {
+            exitWithCommandlineError();
         }
 
         // Print out error for invalid input.
         if (!valid) {
-            System.out.println("usage: ShadowLife <tick rate> <max ticks> <world file>");
-            System.exit(-1);
+            exitWithCommandlineError();
             return false;
         } else {
             return true;
@@ -105,7 +112,19 @@ public class ShadowLife extends AbstractGame {
     }
 
 
-    // Main method to run program.
+    // Exits program and reports an error with commandline input by printing what input is excepted.
+    private static void exitWithCommandlineError() {
+        System.out.println("usage: ShadowLife <tick rate> <max ticks> <world file>");
+        System.exit(-1);
+    }
+
+
+
+    /**
+     * This is the main method that is called to run the simulation.
+     * @param args This stores the commandline input for tick rate (int),
+     *             maximum number of ticks (int) and file to read (String).
+     */
     public static void main(String[] args) {
         // Run simulation only if commandline input is valid.
         if (isValidCommandline(args)) {

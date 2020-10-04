@@ -1,8 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- * Class to represent a thief.
- */
-
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the main driver class to run the ShadowLife simulation.*/
 import java.util.ArrayList;
 
 public class Thief extends Mover {
@@ -23,21 +22,24 @@ public class Thief extends Mover {
         this.setDirection(direction);
     }
 
+    public Thief() {
+        super(0, 0, "res/images/thief.png", UP);
+        this.consuming = false;
+    }
 
     // Method to run Algorithm 4 to update the state of a Thief every tick.
     @Override
-    public ArrayList<Mover> updateStatus(World world) {
+    public void updateStatus(World world) {
 
-        // Check if Gatherer is to move forward, is on a Mitosis Pool, Fence or Sign. Update accordingly.
-        ArrayList<Mover> newMovers = this.checkCommonMoverBehaviour(world);
+        // Check if Thief is to move forward, is on a Mitosis Pool, Fence or Sign. Update accordingly.
+        this.checkCommonMoverBehaviour(world);
 
         // Get actors that are on the same tile.
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
 
         // If Thief on a Mitosis Pool delete it.
-        if (newMovers != null) {
-            this.setMarkForDelete(true);
-            return newMovers;
+        if (world.getNewMovers().size() != 0) {
+            this.setMarkedForDelete(true);
         }
 
 
@@ -93,18 +95,16 @@ public class Thief extends Mover {
                 this.consuming = false;
                 stockpile.setFruit(stockpile.getFruit() - 1);
                 this.setDirection((this.getDirection() + 1) % 4);
+            } else {
+                this.setDirection((this.getDirection() + 1) % 4);
             }
-        } else {
-            this.setDirection((this.getDirection() + 1) % 4);
         }
-
-        return null;
     }
 
 
     // Method for running logic for landing on a Mitosis Pool. Create two new thieves and delete this one.
     @Override
-    protected ArrayList<Mover> onPool() {
+    protected void onPool(World world) {
 
         // Stores any newly created thieves.
         ArrayList<Mover> movers = new ArrayList<Mover>();
@@ -120,9 +120,8 @@ public class Thief extends Mover {
         thief1.moveForward();
         thief2.moveForward();
 
-        // Add the new thieves to a list to be added to simulation after each other Actor has been updated.
-        movers.add(thief1);
-        movers.add(thief2);
-        return movers;
+        // Add the new thieves to the simulation.
+        world.getNewMovers().add(thief1);
+        world.getNewMovers().add(thief2);
     }
 }

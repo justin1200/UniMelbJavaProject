@@ -1,8 +1,7 @@
-/* Implementation for Project 2 for SWEN20003 Object Oriented Software Development
- * (Semester 2) by Justin Aaron Kelley (997351).
- *
- * This is superclass representing actors, which are any objects like a tree,
- * background or thief. */
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
+ * @author by Justin Aaron Kelley (997351).
+ * This is the abstract class that represents a general actor that may be static or non-static in behaviour.*/
 
 import bagel.*;
 
@@ -12,30 +11,50 @@ public abstract class Actor {
     protected static final int TILE_LENGTH = 64;
 
     // Marks if Actor is to be deleted.
-    private boolean markForDelete;
+    private boolean markedForDelete;
 
     // Coordinate for actor and the image representation for them.
     private final Coordinate coordinate;
     private Image image;
 
 
-    // Constructors for Actors.
+
+    /**
+     * Constructor for creating a general Actor.
+     * @param x This is the x-coordinate of the Actor's position on the display (int).
+     * @param y This is the y-coordinate of the Actor's position on the display (int).
+     * @param image This is the image that represents the Actor on the display (Image).
+     */
     public Actor(int x, int y, String image) {
         this.coordinate = new Coordinate(x, y);
         this.image = new Image(image);
-        this.markForDelete = false;
+        this.markedForDelete = false;
     }
 
+
+    /**
+     * Another constructor for creating an Actor.
+     * @param x This is the x-coordinate of the Actor's position on the display (int).
+     * @param y This is the y-coordinate of the Actor's position on the display (int).
+     */
     public Actor(int x, int y) {
         this.coordinate = new Coordinate(x, y);
     }
 
 
-    // Getter and setters for coordinates.
+
+    /**
+     * Getter for coordinates.
+     * @return Returns the Coordinate for the Actor (Coordinate).
+     */
     public final Coordinate getCoordinate() {
         return coordinate;
     }
 
+    /**
+     * Sets the x-coordinate of the Actor.
+     * @param x The x-coordinate to be set (int).
+     */
     public final void setCoordinateX(int x) {
         this.coordinate.setX(x);
     }
@@ -52,12 +71,12 @@ public abstract class Actor {
 
 
     // Getter and setter for markForDelete.
-    public boolean isMarkForDelete() {
-        return markForDelete;
+    public boolean isMarkedForDelete() {
+        return markedForDelete;
     }
 
-    public void setMarkForDelete(boolean markForDelete) {
-        this.markForDelete = markForDelete;
+    public void setMarkedForDelete(boolean markedForDelete) {
+        this.markedForDelete = markedForDelete;
     }
 
 
