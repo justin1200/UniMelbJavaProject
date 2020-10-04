@@ -1,7 +1,9 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class stores the actors in the simulation and handles the operations related to loading them from a file and
+ * updating their states each tick.
+ * */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileReader;
@@ -15,26 +17,49 @@ public class World {
     // Stores any newly created movers,
     private ArrayList<Mover> newMovers;
 
-    // Constructor for Class.
+
+
+    /**
+     * Constructor for creating a World object to store actors in for a simulation.
+     */
     public World() {
         this.actors = new ArrayList<Actor>();
     }
 
-    // Getter for actor list.
+
+
+    /**
+     * Gets the list of actors in the simulation.
+     * @return The list of actors in the simulation.
+     */
     public ArrayList<Actor> getActors() {
         return actors;
     }
 
-    // Getter and setter for newMovers.
+
+    /**
+     * Gets the list of movers to be added to the simulation.
+     * @return The list of movers to be added.
+     */
     public ArrayList<Mover> getNewMovers() {
         return newMovers;
     }
 
+
+    /**
+     * Updates the list that stores any movers to be created to a new one.
+     * @param newMovers The new list of movers to be made.
+     */
     public void setNewMovers(ArrayList<Mover> newMovers) {
         this.newMovers = newMovers;
     }
 
-    // Function to read actor data from file, filename.
+
+
+    /**
+     * Takes a csv file that has a list of actors to be added to the simulation.
+     * @param filename The csv file storing the list of actors to be created.
+     */
     public final void readFile(String filename) {
 
         // Line number.
@@ -75,12 +100,18 @@ public class World {
     }
 
 
-    // Add objects that were read from file into the 2D image.
+
+    /**
+     * Adds the actors read from the file onto the display for the simulation.
+     */
     public final void addActors() {
         for (Actor actor: this.actors) {
-            actor.add();
+            if (!actor.isMarkedForDelete()) {
+                actor.add();
+            }
         }
     }
+
 
 
     // Creates actor for the correct class.
@@ -127,7 +158,7 @@ public class World {
             case "Gatherer":
                 actors.add(new Gatherer(x, y));
                 break;
-            case "MitosisPool":
+            case "Pool":
                 actors.add(new MitosisPool(x, y));
                 break;
             default:
@@ -135,6 +166,7 @@ public class World {
                 break;
         }
     }
+
 
 
     // Updates the status for a specific subtype of Mover.
@@ -148,7 +180,7 @@ public class World {
             actor = this.actors.get(i);
 
             // Update status of the Mover if it is of this specific subtype.
-            if (actor.getClass() == o.getClass()) {
+            if (actor.getClass() == o.getClass() && !actor.isMarkedForDelete()) {
                 ((Mover) actor).updateStatus(this);
 
                 // Add newly created movers to the simulation.
@@ -159,8 +191,11 @@ public class World {
         }
     }
 
-    // Updates the status of the actors for the simulation each tick.
-    public final void updateActors() {
+
+    /**
+     * For each tick in the simulation, this method will update the status for any actors that need to be updated.
+     */
+    public void updateActors() {
 
         // Get number of current actors.
         int length = this.actors.size();
@@ -178,8 +213,12 @@ public class World {
     }
 
 
-    // To check if all actors are inactive.
-    public final void checkStatus(int numTicks) {
+    /**
+     * Checks if all actors are inactive.
+     * @param numTicks Stores the number of ticks that have passed, which is printed in case all actors
+     *                 are inactive.
+     */
+    public void checkStatus(int numTicks) {
 
         Mover mover;
         boolean finished = true;
@@ -200,6 +239,7 @@ public class World {
             printSummary(numTicks);
         }
     }
+
 
 
     // Prints a summary of the simulation once finished.

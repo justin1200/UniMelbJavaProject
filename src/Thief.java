@@ -1,7 +1,9 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class handles the functionality for a thief including the logic for updating it every tick.
+ * */
+
 import java.util.ArrayList;
 
 public class Thief extends Mover {
@@ -10,24 +12,45 @@ public class Thief extends Mover {
     private boolean consuming;
 
 
-    // Constructors for a Thief.
+
+    /**
+     * Constructor that allows for position setting.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     */
     public Thief(int x, int y) {
         super(x, y, "res/images/thief.png", UP);
         consuming = false;
     }
 
+
+    /**
+     * Constructor that allows for position and direction setting.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param direction The direction the Gatherer moves in.
+     */
     public Thief(int x, int y, int direction) {
         super(x, y, "res/images/thief.png", UP);
         consuming = false;
         this.setDirection(direction);
     }
 
+
+    /**
+     * Default constructor sets position at (0, 0).
+     */
     public Thief() {
         super(0, 0, "res/images/thief.png", UP);
         this.consuming = false;
     }
 
-    // Method to run Algorithm 4 to update the state of a Thief every tick.
+
+
+    /**
+     * Runs the algorithm for updating the Thief each tick depending on where it lands in the simulation.
+     * @param world Contains all the actors in the simulation and operations related to updating them.
+     */
     @Override
     public void updateStatus(World world) {
 
@@ -36,11 +59,6 @@ public class Thief extends Mover {
 
         // Get actors that are on the same tile.
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
-
-        // If Thief on a Mitosis Pool delete it.
-        if (world.getNewMovers().size() != 0) {
-            this.setMarkedForDelete(true);
-        }
 
 
         // Set consuming to true if the Thief lands on a Pad.
@@ -90,11 +108,13 @@ public class Thief extends Mover {
 
             // If possible take a fruit from a Stockpile.
             Stockpile stockpile = (Stockpile) actor;
-            if (!this.isCarrying() && stockpile.getFruit() > 0) {
-                this.setCarrying(true);
-                this.consuming = false;
-                stockpile.setFruit(stockpile.getFruit() - 1);
-                this.setDirection((this.getDirection() + 1) % 4);
+            if (!this.isCarrying()) {
+                if (stockpile.getFruit() > 0) {
+                    this.setCarrying(true);
+                    this.consuming = false;
+                    stockpile.setFruit(stockpile.getFruit() - 1);
+                    this.setDirection((this.getDirection() + 1) % 4);
+                }
             } else {
                 this.setDirection((this.getDirection() + 1) % 4);
             }
@@ -102,12 +122,10 @@ public class Thief extends Mover {
     }
 
 
-    // Method for running logic for landing on a Mitosis Pool. Create two new thieves and delete this one.
+
+    // Method for running Thief specific logic for landing on a Mitosis Pool. Create two new thieves.
     @Override
     protected void onPool(World world) {
-
-        // Stores any newly created thieves.
-        ArrayList<Mover> movers = new ArrayList<Mover>();
 
         // Create two new thieves.
         Thief thief1, thief2;

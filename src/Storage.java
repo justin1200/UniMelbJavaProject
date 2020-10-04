@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class represents any static actor that can store fruit.
+ * */
 
 import bagel.Font;
 
@@ -13,25 +14,45 @@ public abstract class Storage extends Actor{
     // Fruit held by storage place.
     private int fruit;
 
-    // Constructor for Storage.
+
+
+    /**
+     * Constructor for setting coordinates and the number of fruit it stores.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param fruit The amount of fruit to be stored.
+     */
     public Storage(int x, int y, int fruit) {
         super(x, y);
         this.fruit = fruit;
     }
 
-    // Getters and setters for fruit.
+
+    /**
+     * Gets the amount of fruit held by this Actor.
+     * @return The amount of fruit held.
+     */
     public int getFruit() {
         return fruit;
     }
 
+
+    /**
+     * Updates the amount of fruit held by this Actor.
+     * @param fruit The amount of fruit that it will now hold.
+     */
     public void setFruit(int fruit) {
         this.fruit = fruit;
     }
 
-    // Changes add() method to add image of the Tree, Stockpile or Hoard to the graphical display with
-    // an included number showing how much fruit it has.
+
+
+    /**
+     * Adds the image of the Actor that can store fruit to the display at its position. A number indicating the
+     * number of fruit held is shown next to its image unless it is storing an infinite amount of fruit.
+     */
     @Override
-    public final void add() {
+    public void add() {
         super.add();
         Font font = new Font("res/VeraMono.ttf", 18);
         if (fruit != INFINITE) {

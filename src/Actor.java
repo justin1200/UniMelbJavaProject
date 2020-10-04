@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the abstract class that represents a general actor that may be static or non-static in behaviour.*/
+ * This is the abstract class that represents a general actor that may be static or non-static in behaviour.
+ * */
 
 import bagel.*;
 
@@ -21,9 +22,9 @@ public abstract class Actor {
 
     /**
      * Constructor for creating a general Actor.
-     * @param x This is the x-coordinate of the Actor's position on the display (int).
-     * @param y This is the y-coordinate of the Actor's position on the display (int).
-     * @param image This is the image that represents the Actor on the display (Image).
+     * @param x This is the x-coordinate of the Actor's position on the display.
+     * @param y This is the y-coordinate of the Actor's position on the display.
+     * @param image This is the image that represents the Actor on the display.
      */
     public Actor(int x, int y, String image) {
         this.coordinate = new Coordinate(x, y);
@@ -34,8 +35,8 @@ public abstract class Actor {
 
     /**
      * Another constructor for creating an Actor.
-     * @param x This is the x-coordinate of the Actor's position on the display (int).
-     * @param y This is the y-coordinate of the Actor's position on the display (int).
+     * @param x This is the x-coordinate of the Actor's position on the display.
+     * @param y This is the y-coordinate of the Actor's position on the display.
      */
     public Actor(int x, int y) {
         this.coordinate = new Coordinate(x, y);
@@ -45,42 +46,62 @@ public abstract class Actor {
 
     /**
      * Getter for coordinates.
-     * @return Returns the Coordinate for the Actor (Coordinate).
+     * @return Returns the Coordinate for the Actor.
      */
     public final Coordinate getCoordinate() {
         return coordinate;
     }
 
+
     /**
      * Sets the x-coordinate of the Actor.
-     * @param x The x-coordinate to be set (int).
+     * @param x The x-coordinate to be set.
      */
     public final void setCoordinateX(int x) {
         this.coordinate.setX(x);
     }
 
+
+    /**
+     * Sets the y-coordinate of the Actor.
+     * @param y The y-coordinate to be set.
+     */
     public final void setCoordinateY(int y) {
         this.coordinate.setY(y);
     }
 
 
-    // Setter for image.
+    /**
+     * Setter for the image to be displayed.
+     * @param image The image that will be displayed.
+     */
     public void setImage(Image image) {
         this.image = image;
     }
 
 
-    // Getter and setter for markForDelete.
+    /**
+     * Returns the value that indicates if the Actor is to be deleted.
+     * @return The value that indicates if the Actor is to be deleted.
+     */
     public boolean isMarkedForDelete() {
         return markedForDelete;
     }
 
+
+    /**
+     * Sets the value that indicates if the Actor is to be deleted.
+     * @param markedForDelete Updated value if the Actor is to be deleted.
+     */
     public void setMarkedForDelete(boolean markedForDelete) {
         this.markedForDelete = markedForDelete;
     }
 
 
-    // Adds an actor's image representation to the 2D graphical image.
+
+    /**
+     * Adds an image of the Actor on the display at its location.
+     */
     public void add() {
         this.image.drawFromTopLeft((int) (this.coordinate.getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH,
                 (int) (this.coordinate.getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);

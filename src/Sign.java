@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class represents a sign in the simulation.
+ * */
 
 import bagel.Image;
 
@@ -10,7 +11,14 @@ public class Sign extends Actor{
     // Direction sign is facing.
     private final int direction;
 
-    // Constructor for Sign.
+
+
+    /**
+     * Constructor for setting coordinates and direction for sign.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param direction The direction the sign faces.
+     */
     public Sign(int x, int y, int direction) {
         super(x, y);
 
@@ -27,13 +35,21 @@ public class Sign extends Actor{
         }
     }
 
-    // Default constructor for sign.
+
+    /**
+     * Default constructor sets position at (0, 0).
+     */
     public Sign() {
         super(0, 0);
         this.direction = Mover.UP;
     }
 
-    // Getter for direction.
+
+
+    /**
+     * Gets the direction the sign faces.
+     * @return The direction the sign faces.
+     */
     public int getDirection() {
         return direction;
     }

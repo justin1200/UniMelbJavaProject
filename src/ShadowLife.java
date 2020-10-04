@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This is the main driver class to run the ShadowLife simulation.
+ * */
 
 import bagel.AbstractGame;
 import bagel.Input;
@@ -27,8 +28,8 @@ public class ShadowLife extends AbstractGame {
 
     /**
      * Constructor to generate a simulation for ShadowLife.
-     * @param args This stores the commandline input for tick rate (int),
-     *             maximum number of ticks (int) and file to read (String).
+     * @param args This stores the commandline input for tick rate,
+     *             maximum number of ticks and file to read.
      */
     public ShadowLife(String[] args) {
         // Set window.
@@ -122,8 +123,8 @@ public class ShadowLife extends AbstractGame {
 
     /**
      * This is the main method that is called to run the simulation.
-     * @param args This stores the commandline input for tick rate (int),
-     *             maximum number of ticks (int) and file to read (String).
+     * @param args This stores the commandline input for tick rate,
+     *             maximum number of ticks and file to read.
      */
     public static void main(String[] args) {
         // Run simulation only if commandline input is valid.

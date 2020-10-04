@@ -1,7 +1,9 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class represents a general Mover in the simulation, which is able to move every tick and performs actions
+ * depending on what it moves onto.
+ * */
 
 import java.util.ArrayList;
 
@@ -20,7 +22,14 @@ public abstract class Mover extends Actor{
     private final Coordinate prevCoordinate;
 
 
-    // Constructor for a Mover.
+
+    /**
+     * Constructor for creating a Mover.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param image The image that represents the Mover on the display.
+     * @param direction the direction the Mover moves in.
+     */
     public Mover(int x, int y, String image, int direction) {
         super(x, y, image);
         this.direction = direction;
@@ -30,33 +39,64 @@ public abstract class Mover extends Actor{
     }
 
 
-    // Varies getters and setters.
+
+    /**
+     * Getter for direction
+     * @return The direction the Mover is moving in.
+     */
     public int getDirection() {
         return direction;
     }
 
+
+    /**
+     * Sets the direction.
+     * @param direction The direction the Mover will face.
+     */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
+
+    /**
+     * Returns the value indicating if the Mover is active.
+     * @return Indicates if the Mover is active.
+     */
     public boolean isActive() {
         return active;
     }
 
+
+    /**
+     * Returns the value indicating if the Mover is carrying a fruit.
+     * @return Indicates if the Mover carries a fruit.
+     */
     public boolean isCarrying() {
         return carrying;
     }
 
+
+    /**
+     * Sets the value for if the Mover is carrying.
+     * @param carrying The new value indicating if the Mover is carrying.
+     */
     public void setCarrying(boolean carrying) {
         this.carrying = carrying;
     }
 
+
+    /**
+     * Gets the previous position of the Mover.
+     * @return The previous coordinate for the Mover.
+     */
     public Coordinate getPrevCoordinate() {
         return prevCoordinate;
     }
 
 
-    // Method to move the mover.
+    /**
+     * Moves the Mover by a tile length (64 pixels) in the direction it is indicated to move in.
+     */
     public void move() {
             // Move up.
         if (direction == UP) {
@@ -72,6 +112,7 @@ public abstract class Mover extends Actor{
             this.setCoordinateX(this.getCoordinate().getX() - TILE_LENGTH);
         }
     }
+
 
 
     // Finds out if another Actor is within the same tile.
@@ -93,7 +134,12 @@ public abstract class Mover extends Actor{
                 y2 - y1 >= -0.1;
     }
 
-    // Get all the actors that are in the same tile as the Mover.
+
+    /**
+     * Finds and returns an ArrayList of all the actors that are in the same tile as the Mover.
+     * @param world Stores all the actors in the simulation.
+     * @return The ArrayList containing all the actors in the same tile as the Mover.
+     */
     public ArrayList<Actor> getActorsInTile(World world) {
 
         // All the actors within the same tile.
@@ -108,6 +154,7 @@ public abstract class Mover extends Actor{
         return actorsInSameTile;
     }
 
+
     // Checks if an actor of a specific class is in the list.
     protected Actor instanceInList(ArrayList<Actor> actorsInTile, Object o) {
         for (Actor actor: actorsInTile) {
@@ -119,21 +166,28 @@ public abstract class Mover extends Actor{
     }
 
 
-    // Method that is used to update the state for a Mover.
+
+    /**
+     * Updates the status of the Mover based on its subtype.
+     * @param world Stores all the actors in the simulation.
+     */
     public abstract void updateStatus(World world);
 
 
-    // To delete current Mover and create two more of the same class if the Mover lands on a Mitosis Pool.
+
+    // Creates two more of the same class if the Mover lands on a Mitosis Pool.
     protected abstract void onPool(World world);
 
+
     // To move a Mover forward.
-    public void moveForward() {
+    protected void moveForward() {
         this.getPrevCoordinate().setX(this.getCoordinate().getX());
         this.getPrevCoordinate().setY(this.getCoordinate().getY());
         this.move();
     }
 
-    // To update state of Mover if they are on a pool or a sign. Returns true if on a Mitosis Pool.
+
+    // To update state of Mover if they are on a pool, fence, tree, sign or on nothing.
     protected void checkCommonMoverBehaviour(World world) {
 
         // Move the Mover forward if active.
@@ -161,6 +215,8 @@ public abstract class Mover extends Actor{
 
         if (actor != null) {
             this.onPool(world);
+            this.active = false;
+            this.setMarkedForDelete(true);
         }
 
 

@@ -1,27 +1,48 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.*/
+ * This class handles the functionality for a gatherer including the logic for updating it every tick.
+ * */
 
 import java.util.ArrayList;
 
 public class Gatherer extends Mover {
 
-    // Constructors for Gatherer.
+    /**
+     * Constructor that allows for position setting.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     */
     public Gatherer(int x, int y) {
         super(x, y, "res/images/gatherer.png", LEFT);
     }
 
+
+    /**
+     * Constructor that allows for position and direction setting.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param direction The direction the Gatherer moves in.
+     */
     public Gatherer(int x, int y, int direction) {
         super(x, y, "res/images/gatherer.png", direction);
         this.setDirection(direction);
     }
 
+
+    /**
+     * Default constructor sets position at (0, 0).
+     */
     public Gatherer() {
         super(0, 0, "res/images/gatherer.png", LEFT);
     }
 
 
+
+    /**
+     * Runs the algorithm for updating the Gatherer each tick depending on where it lands in the simulation.
+     * @param world Contains all the actors in the simulation and operations related to updating them.
+     */
     // Method for running Algorithm 2 to update the state of a Gatherer every tick.
     @Override
     public void updateStatus(World world) {
@@ -32,11 +53,6 @@ public class Gatherer extends Mover {
         // Get actors that are on the same tile.
         ArrayList<Actor> actorsInTile = getActorsInTile(world);
 
-        // If Gatherer on a Mitosis Pool delete it.
-        if (world.getNewMovers().size() != 0) {
-            this.setMarkedForDelete(true);
-        }
-
 
         // Check if the Gatherer is on a Stockpile or Hoard.
         Actor actor;
@@ -46,21 +62,20 @@ public class Gatherer extends Mover {
         }
 
         // Place any held fruit on the Stockpile or Hoard.
-        if (actor != null && this.isCarrying()) {
-            this.setCarrying(false);
-            Storage storage = (Storage) actor;
-            storage.setFruit(storage.getFruit() + 1);
+        if (actor != null) {
+            if (this.isCarrying()) {
+                this.setCarrying(false);
+                Storage storage = (Storage) actor;
+                storage.setFruit(storage.getFruit() + 1);
+            }
             this.setDirection((this.getDirection() + 2) % 4);
         }
     }
 
 
-    // Method for running logic for landing on a Mitosis Pool. Create two new gatherers and delete this one.
+    // Method for running Gatherer specific logic for landing on a Mitosis Pool. Create two new gatherers.
     @Override
     protected void onPool(World world) {
-
-        // Stores any newly created gatherers.
-        ArrayList<Mover> movers = new ArrayList<Mover>();
 
         // Create two new gatherers.
         Gatherer gatherer1, gatherer2;
