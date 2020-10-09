@@ -9,7 +9,7 @@ import bagel.*;
 public abstract class Actor {
 
     // Constant for tile length.
-    protected static final int TILE_LENGTH = 64;
+    public static final int TILE_LENGTH = 64;
 
     // Marks if Actor is to be deleted.
     private boolean markedForDelete;
@@ -28,6 +28,7 @@ public abstract class Actor {
      */
     public Actor(int x, int y, String image) {
         this.coordinate = new Coordinate(x, y);
+        this.adjustCoordinates();
         this.image = new Image(image);
         this.markedForDelete = false;
     }
@@ -40,6 +41,7 @@ public abstract class Actor {
      */
     public Actor(int x, int y) {
         this.coordinate = new Coordinate(x, y);
+        this.adjustCoordinates();
     }
 
 
@@ -103,7 +105,15 @@ public abstract class Actor {
      * Adds an image of the Actor on the display at its location.
      */
     public void add() {
-        this.image.drawFromTopLeft((int) (this.coordinate.getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH,
-                (int) (this.coordinate.getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
+        this.image.drawFromTopLeft(this.coordinate.getX(), this.coordinate.getY());
+    }
+
+
+
+    // Fixes the coordinate so it is in the top left of a tile if coordinates are not in that location.
+    // Coordinates are in a tile if the x or y coordinates is less then 64 pixels more then the top left location.
+    private void adjustCoordinates() {
+        this.coordinate.setX((int) (this.coordinate.getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
+        this.coordinate.setY((int) (this.coordinate.getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
     }
 }

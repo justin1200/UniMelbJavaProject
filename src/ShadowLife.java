@@ -87,7 +87,7 @@ public class ShadowLife extends AbstractGame {
         boolean valid = true;
 
         // Check for enough inputs.
-        if (args.length < 3) {
+        if (args.length != 3) {
             valid = false;
         }
 

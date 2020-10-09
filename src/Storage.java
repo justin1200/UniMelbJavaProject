@@ -11,6 +11,9 @@ public abstract class Storage extends Actor{
     // Constant to represent infinity.
     protected final static int INFINITE = -1;
 
+    // Constant for font size.
+    private final static int FONT_SIZE = 18;
+
     // Fruit held by storage place.
     private int fruit;
 
@@ -54,12 +57,9 @@ public abstract class Storage extends Actor{
     @Override
     public void add() {
         super.add();
-        Font font = new Font("res/VeraMono.ttf", 18);
+        Font font = new Font("res/VeraMono.ttf", FONT_SIZE);
         if (fruit != INFINITE) {
-            font.drawString(String.valueOf(fruit),
-                    (int) (this.getCoordinate().getX() / (TILE_LENGTH * 1.0)) * TILE_LENGTH,
-                    (int) (this.getCoordinate().getY() / (TILE_LENGTH * 1.0)) * TILE_LENGTH);
+            font.drawString(String.valueOf(fruit), this.getCoordinate().getX(), this.getCoordinate().getY());
         }
-
     }
 }

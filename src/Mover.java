@@ -130,8 +130,7 @@ public abstract class Mover extends Actor{
         y2 = actor.getCoordinate().getY();
 
         // Checks if the two actors are in same tile.
-        return x2 - x1 < TILE_LENGTH - 1 && x2 - x1 >= -0.1 && y2 - y1 < TILE_LENGTH - 1 &&
-                y2 - y1 >= -0.1;
+        return x2 == x1 && y2 == y1;
     }
 
 
