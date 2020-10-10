@@ -18,7 +18,8 @@ public abstract class Actor {
     private final Coordinate coordinate;
     private Image image;
 
-
+    // Marks the type for the Actor.
+    private String type;
 
     /**
      * Constructor for creating a general Actor.
@@ -26,11 +27,12 @@ public abstract class Actor {
      * @param y This is the y-coordinate of the Actor's position on the display.
      * @param image This is the image that represents the Actor on the display.
      */
-    public Actor(int x, int y, String image) {
+    public Actor(int x, int y, String image, String type) {
         this.coordinate = new Coordinate(x, y);
         this.adjustCoordinates();
         this.image = new Image(image);
         this.markedForDelete = false;
+        this.type = type;
     }
 
 
@@ -42,6 +44,8 @@ public abstract class Actor {
     public Actor(int x, int y) {
         this.coordinate = new Coordinate(x, y);
         this.adjustCoordinates();
+        this.markedForDelete = false;
+        this.type = type;
     }
 
 
@@ -79,6 +83,24 @@ public abstract class Actor {
      */
     public void setImage(Image image) {
         this.image = image;
+    }
+
+
+    /**
+     * Returns the type of actor this Actor is.
+     * @return Returns the type of this actor as a String.
+     */
+    public String getType() {
+        return type;
+    }
+
+
+    /**
+     * Sets the type of actor this Actor is.
+     * @param type The type of this actor as a String.
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
 

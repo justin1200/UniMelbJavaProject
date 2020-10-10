@@ -14,7 +14,7 @@ public class Gatherer extends Mover {
      * @param y The y-coordinate.
      */
     public Gatherer(int x, int y) {
-        super(x, y, "res/images/gatherer.png", LEFT);
+        super(x, y, "res/images/gatherer.png", LEFT, "Gatherer");
     }
 
 
@@ -25,16 +25,8 @@ public class Gatherer extends Mover {
      * @param direction The direction the Gatherer moves in.
      */
     public Gatherer(int x, int y, int direction) {
-        super(x, y, "res/images/gatherer.png", direction);
+        super(x, y, "res/images/gatherer.png", direction, "Gatherer");
         this.setDirection(direction);
-    }
-
-
-    /**
-     * Default constructor sets position at (0, 0).
-     */
-    public Gatherer() {
-        super(0, 0, "res/images/gatherer.png", LEFT);
     }
 
 
@@ -56,9 +48,9 @@ public class Gatherer extends Mover {
 
         // Check if the Gatherer is on a Stockpile or Hoard.
         Actor actor;
-        actor = instanceInList(actorsInTile, new Stockpile());
+        actor = instanceInList(actorsInTile, "Stockpile");
         if (actor == null) {
-            actor = instanceInList(actorsInTile, new Hoard());
+            actor = instanceInList(actorsInTile, "Hoard");
         }
 
         // Place any held fruit on the Stockpile or Hoard.

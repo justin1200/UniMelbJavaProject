@@ -1,7 +1,7 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class represents any static actor that can store fruit.
+ * This class represents any static/stationary actor that can store fruit.
  * */
 
 import bagel.Font;

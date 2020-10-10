@@ -123,16 +123,16 @@ public class World {
         // Add correct class to list. Otherwise print error message.
         switch (cells[0]) {
             case "Tree":
-                actors.add(new Tree(x, y, 3, false));
+                actors.add(new Tree(x, y, 3));
                 break;
             case "GoldenTree":
-                actors.add(new Tree(x, y, Storage.INFINITE, true));
+                actors.add(new Tree(x, y, Storage.INFINITE));
                 break;
             case "Fence":
-                actors.add(new Fence(x, y));
+                actors.add(new StationaryActor(x, y, "res/images/fence.png", cells[0]));
                 break;
             case "Pad":
-                actors.add(new Pad(x, y));
+                actors.add(new StationaryActor(x, y, "res/images/pad.png", cells[0]));
                 break;
             case "SignDown":
                 actors.add(new Sign(x, y, Mover.DOWN));
@@ -147,10 +147,8 @@ public class World {
                 actors.add(new Sign(x, y, Mover.LEFT));
                 break;
             case "Hoard":
-                actors.add(new Hoard(x, y));
-                break;
             case "Stockpile":
-                actors.add(new Stockpile(x, y));
+                actors.add(new Store(x, y, cells[0]));
                 break;
             case "Thief":
                 actors.add(new Thief(x, y));
@@ -159,7 +157,7 @@ public class World {
                 actors.add(new Gatherer(x, y));
                 break;
             case "Pool":
-                actors.add(new MitosisPool(x, y));
+                actors.add(new StationaryActor(x, y, "res/images/pool.png", cells[0]));
                 break;
             default:
                 printError(filename, lineNum);
@@ -170,7 +168,7 @@ public class World {
 
 
     // Updates the status for a specific subtype of Mover.
-    private void updateSpecificMoverType(Object o, int length) {
+    private void updateSpecificMoverType(String type, int length) {
 
         Actor actor;
 
@@ -180,7 +178,7 @@ public class World {
             actor = this.actors.get(i);
 
             // Update status of the Mover if it is of this specific subtype.
-            if (actor.getClass() == o.getClass() && !actor.isMarkedForDelete()) {
+            if (actor.getType().equals(type) && !actor.isMarkedForDelete()) {
                 ((Mover) actor).updateStatus(this);
 
                 // Add newly created movers to the simulation.
@@ -201,8 +199,8 @@ public class World {
         int length = this.actors.size();
 
         // Update simulation for Gatherers and then Thieves.
-        this.updateSpecificMoverType(new Gatherer(), length);
-        this.updateSpecificMoverType(new Thief(), length);
+        this.updateSpecificMoverType("Gatherer", length);
+        this.updateSpecificMoverType("Thief", length);
 
         // Delete any actors marked for it.
         for (int i = 0; i < actors.size(); i++) {
@@ -251,7 +249,7 @@ public class World {
 
         // For each Stockpile or Hoard, print out the number of fruits in each one.
         for (Actor actor: actors) {
-            if (actor instanceof Stockpile || actor instanceof Hoard) {
+            if (actor.getType().equals("Stockpile") || actor.getType().equals("Hoard")) {
                 storage = (Storage) actor;
                 System.out.println(storage.getFruit());
             }

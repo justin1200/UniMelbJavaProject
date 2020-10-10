@@ -30,8 +30,8 @@ public abstract class Mover extends Actor{
      * @param image The image that represents the Mover on the display.
      * @param direction the direction the Mover moves in.
      */
-    public Mover(int x, int y, String image, int direction) {
-        super(x, y, image);
+    public Mover(int x, int y, String image, int direction, String type) {
+        super(x, y, image, type);
         this.direction = direction;
         this.active = true;
         this.carrying = false;
@@ -155,9 +155,9 @@ public abstract class Mover extends Actor{
 
 
     // Checks if an actor of a specific class is in the list.
-    protected Actor instanceInList(ArrayList<Actor> actorsInTile, Object o) {
+    protected Actor instanceInList(ArrayList<Actor> actorsInTile, String type) {
         for (Actor actor: actorsInTile) {
-            if (actor.getClass() == o.getClass()) {
+            if (actor.getType().equals(type)) {
                 return actor;
             }
         }
@@ -199,7 +199,7 @@ public abstract class Mover extends Actor{
 
 
         // If Gatherer is on a fence. Set it to inactive and move to previous position.
-        Actor actor = instanceInList(actorsInTile, new Fence());
+        Actor actor = instanceInList(actorsInTile, "Fence");
         if (actor != null) {
             this.active = false;
             this.getCoordinate().setX(this.getPrevCoordinate().getX());
@@ -210,7 +210,7 @@ public abstract class Mover extends Actor{
         // Check if the Mover is on a Mitosis Pool. If so, add two new Movers of the same class of the Mover and delete
         // the Mover.
         ArrayList<Mover> newMovers;
-        actor = instanceInList(actorsInTile, new MitosisPool());
+        actor = instanceInList(actorsInTile, "Pool");
 
         if (actor != null) {
             this.onPool(world);
@@ -220,19 +220,22 @@ public abstract class Mover extends Actor{
 
 
         // Check if Mover lands on a sign. Update direction to Sign's direction if so.
-        actor = instanceInList(actorsInTile, new Sign());
+        actor = instanceInList(actorsInTile, "Sign");
         if (actor != null) {
             this.direction = ((Sign) actor).getDirection();
         }
 
 
         // Check if the Mover is on a tree and can pick up a fruit.
-        actor = instanceInList(actorsInTile, new Tree());
+        actor = instanceInList(actorsInTile, "Tree");
+        if (actor == null) {
+            actor = instanceInList(actorsInTile, "GoldenTree");
+        }
         if (actor != null && !this.isCarrying()) {
             Tree tree = (Tree) actor;
             // Take a fruit from a tree if it has any.
-            if (tree.getFruit() > 0 || tree.isGolden()) {
-                if (!tree.isGolden()) {
+            if (tree.getFruit() != 0) {
+                if (!tree.getType().equals("GoldenTree")) {
                     tree.setFruit(tree.getFruit() - 1);
                 }
                 this.setCarrying(true);

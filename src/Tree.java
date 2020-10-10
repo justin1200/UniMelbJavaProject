@@ -8,9 +8,6 @@ import bagel.Image;
 
 public class Tree extends Storage{
 
-    // Tracks if the tree is a golden tree.
-    private boolean isGolden;
-
 
 
     /**
@@ -18,36 +15,16 @@ public class Tree extends Storage{
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      * @param fruit The amount of fruit it holds.
-     * @param isGolden If it is a golden tree or not.
      */
-    public Tree(int x, int y, int fruit, boolean isGolden) {
+    public Tree(int x, int y, int fruit) {
         super(x, y, fruit);
-        this.isGolden = isGolden;
 
-        if (isGolden) {
+        if (fruit == INFINITE) {
             this.setImage(new Image("res/images/gold-tree.png"));
+            this.setType("GoldenTree");
         } else {
             this.setImage(new Image("res/images/tree.png"));
+            this.setType("Tree");
         }
-    }
-
-
-    /**
-     * Default constructor sets position at (0, 0) and creates a normal tree.
-     */
-    public Tree() {
-        super(0, 0, 3);
-        this.isGolden = false;
-        this.setImage(new Image("res/images/tree.png"));
-    }
-
-
-
-    /**
-     * Gets the value for if the tree is golden.
-     * @return The value that indicates if the tree is golden or not.
-     */
-    public boolean isGolden() {
-        return isGolden;
     }
 }

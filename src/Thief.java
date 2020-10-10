@@ -19,7 +19,7 @@ public class Thief extends Mover {
      * @param y The y-coordinate.
      */
     public Thief(int x, int y) {
-        super(x, y, "res/images/thief.png", UP);
+        super(x, y, "res/images/thief.png", UP, "Thief");
         consuming = false;
     }
 
@@ -31,18 +31,9 @@ public class Thief extends Mover {
      * @param direction The direction the Gatherer moves in.
      */
     public Thief(int x, int y, int direction) {
-        super(x, y, "res/images/thief.png", UP);
+        super(x, y, "res/images/thief.png", UP, "Thief");
         consuming = false;
         this.setDirection(direction);
-    }
-
-
-    /**
-     * Default constructor sets position at (0, 0).
-     */
-    public Thief() {
-        super(0, 0, "res/images/thief.png", UP);
-        this.consuming = false;
     }
 
 
@@ -63,23 +54,23 @@ public class Thief extends Mover {
 
         // Set consuming to true if the Thief lands on a Pad.
         Actor actor;
-        actor = instanceInList(actorsInTile, new Pad());
+        actor = instanceInList(actorsInTile, "Pad");
         if (actor != null) {
             this.consuming = true;
         }
 
 
         // Change direction of Thief by 270 degrees clockwise if it lands on a tile with a Gatherer that has moved.
-        actor = instanceInList(actorsInTile, new Gatherer());
+        actor = instanceInList(actorsInTile, "Gatherer");
         if (actor != null) {
             this.setDirection((this.getDirection() + 4 - 1) % 4);
         }
 
 
         // Check if the Thief lands on a Hoard.
-        actor = instanceInList(actorsInTile, new Hoard());
+        actor = instanceInList(actorsInTile, "Hoard");
         if (actor != null) {
-            Hoard hoard = (Hoard) actor;
+            Store hoard = (Store) actor;
 
             // If the Thief is set for consuming, then take a fruit.
             if (consuming) {
@@ -103,11 +94,11 @@ public class Thief extends Mover {
 
 
         // Check if the Thief is on a Stockpile.
-        actor = instanceInList(actorsInTile, new Stockpile());
+        actor = instanceInList(actorsInTile, "Stockpile");
         if (actor != null) {
 
             // If possible take a fruit from a Stockpile.
-            Stockpile stockpile = (Stockpile) actor;
+            Store stockpile = (Store) actor;
             if (!this.isCarrying()) {
                 if (stockpile.getFruit() > 0) {
                     this.setCarrying(true);

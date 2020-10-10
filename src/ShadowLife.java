@@ -19,7 +19,7 @@ public class ShadowLife extends AbstractGame {
     private double time;
 
     // Background of simulation.
-    private final Background background;
+    private final StationaryActor background;
 
     // Reads, stores and processes the Actors for simulation.
     private final World world;
@@ -38,7 +38,7 @@ public class ShadowLife extends AbstractGame {
         // Get information from command line and world file.
         this.tickRate = Integer.parseInt(args[0]);
         this.maxTicks = Integer.parseInt(args[1]);
-        this.background = new Background();
+        this.background = new StationaryActor(0, 0, "res/images/background.png", "Background");
         world = new World();
         world.readFile(args[2]);
 

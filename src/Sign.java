@@ -21,6 +21,7 @@ public class Sign extends Actor{
      */
     public Sign(int x, int y, int direction) {
         super(x, y);
+        this.setType("Sign");
 
         // Image of sign depends on direction it faces.
         this.direction = direction;
