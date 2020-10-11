@@ -11,6 +11,8 @@ public class StationaryActor extends Actor{
      * Constructor for setting coordinates.
      * @param x The x-coordinate.
      * @param y The y-coordinate.
+     * @param image The image used to represent this Actor on the display.
+     * @param type The type of StationaryActor this Actor is.
      */
     public StationaryActor(int x, int y, String image, String type) {
         super(x, y, image, type);

@@ -12,6 +12,7 @@ public class Store extends Storage {
      * Constructor for setting coordinates.
      * @param x The x-coordinate.
      * @param y The y-coordinate.
+     * @param type The type of Actor this Store is.
      */
     public Store(int x, int y, String type) {
         super(x, y, 0);

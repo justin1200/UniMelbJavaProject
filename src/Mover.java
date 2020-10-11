@@ -28,7 +28,8 @@ public abstract class Mover extends Actor{
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      * @param image The image that represents the Mover on the display.
-     * @param direction the direction the Mover moves in.
+     * @param direction The direction the Mover moves in.
+     * @param type The type of Actor this Mover is.
      */
     public Mover(int x, int y, String image, int direction, String type) {
         super(x, y, image, type);
@@ -154,7 +155,7 @@ public abstract class Mover extends Actor{
     }
 
 
-    // Checks if an actor of a specific class is in the list.
+    // Checks if an actor of a specific actor type is in the list.
     protected Actor instanceInList(ArrayList<Actor> actorsInTile, String type) {
         for (Actor actor: actorsInTile) {
             if (actor.getType().equals(type)) {

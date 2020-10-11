@@ -26,6 +26,7 @@ public abstract class Actor {
      * @param x This is the x-coordinate of the Actor's position on the display.
      * @param y This is the y-coordinate of the Actor's position on the display.
      * @param image This is the image that represents the Actor on the display.
+     * @param type The type of Actor this Actor is.
      */
     public Actor(int x, int y, String image, String type) {
         this.coordinate = new Coordinate(x, y);
@@ -45,7 +46,6 @@ public abstract class Actor {
         this.coordinate = new Coordinate(x, y);
         this.adjustCoordinates();
         this.markedForDelete = false;
-        this.type = type;
     }
 
 
