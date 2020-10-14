@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class stores the coordinates of the Actors.
+ * This class stores the coordinates of the Actors in the simulation and this is the location they appear at on the
+ * display.
  * */
 
 public class Coordinate {

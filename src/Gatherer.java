@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class handles the functionality for a gatherer including the logic for updating it every tick.
+ * This class handles the functionality for a Gatherer including the logic for updating it every tick. A Gatherer will
+ * collect fruit from trees and stores it at hoards or stockpiles.
  * */
 
 import java.util.ArrayList;

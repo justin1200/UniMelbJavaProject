@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class represents a sign in the simulation.
+ * This class represents a sign in the simulation, which points in a direction. A Mover will change its direction
+ * in the direction the sign faces in.
  * */
 
 import bagel.Image;

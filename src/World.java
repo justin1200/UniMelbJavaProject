@@ -2,8 +2,9 @@
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
  * This class stores the actors in the simulation and handles the operations related to loading them from a file and
- * updating their states each tick.
+ * updating or checking their states each tick.
  * */
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileReader;

@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class represents a normal or golden tree in the simulation.
+ * This class represents a normal or golden tree in the simulation, which hold fruit. An actor capable of taking fruit
+ * can take fruit from a tree. A tree acts as a place where fruit is intially located at and can be taken from.
  * */
 
 import bagel.Image;

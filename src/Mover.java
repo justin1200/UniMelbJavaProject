@@ -2,7 +2,8 @@
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
  * This class represents a general Mover in the simulation, which is able to move every tick and performs actions
- * depending on what it moves onto.
+ * depending on what it moves onto. This class contains methods for checking and performing common status/behaviour of
+ * movers.
  * */
 
 import java.util.ArrayList;

@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This class handles the functionality for a thief including the logic for updating it every tick.
+ * This class handles the functionality for a thief including the logic for updating it every tick. A Thief will
+ * take fruit from any Actor that stores fruit and it will attempt to store this at a Hoard.
  * */
 
 import java.util.ArrayList;

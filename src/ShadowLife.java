@@ -1,7 +1,8 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
- * This is the main driver class to run the ShadowLife simulation.
+ * This is the main driver class to run the ShadowLife simulation. This class starts up the program, reads in
+ * commandline input and data from a world file and then uses Bagel to simulate ShadowLife based on the given input.
  * */
 
 import bagel.AbstractGame;

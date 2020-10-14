@@ -2,6 +2,7 @@
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * @author by Justin Aaron Kelley (997351).
  * This is the abstract class that represents a general actor that may be static or non-static in behaviour.
+ * This class allows for the creation of an actor and adding an image of it to the display at a given location.
  * */
 
 import bagel.*;
