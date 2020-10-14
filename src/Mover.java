@@ -62,7 +62,7 @@ public abstract class Mover extends Actor{
 
     /**
      * Returns the value indicating if the Mover is active.
-     * @return Indicates if the Mover is active.
+     * @return If the Mover is active.
      */
     public boolean isActive() {
         return active;
@@ -71,7 +71,7 @@ public abstract class Mover extends Actor{
 
     /**
      * Returns the value indicating if the Mover is carrying a fruit.
-     * @return Indicates if the Mover carries a fruit.
+     * @return If the Mover carries a fruit.
      */
     public boolean isCarrying() {
         return carrying;
