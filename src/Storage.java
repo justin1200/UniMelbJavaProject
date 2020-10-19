@@ -1,12 +1,11 @@
-/**
- * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
- * @author by Justin Aaron Kelley (997351).
- * This abstract class represents any static/stationary actor that can store fruit and has operations related to displaying
- * fruit count, adding or removing fruit.
- * */
-
 import bagel.Font;
 
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
+ * This abstract class represents any static/stationary actor that can store fruit and has operations
+ * related to displaying fruit count, adding or removing fruit.
+ * @author by Justin Aaron Kelley (997351).
+ * */
 public abstract class Storage extends Actor{
 
     // Constant to represent infinity.

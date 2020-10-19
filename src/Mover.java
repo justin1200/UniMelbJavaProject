@@ -1,13 +1,12 @@
+import java.util.ArrayList;
+
 /**
- * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
- * @author by Justin Aaron Kelley (997351).
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
  * This class represents a general Mover in the simulation, which is able to move every tick and performs actions
  * depending on what it moves onto. This class contains methods for checking and performing common status/behaviour of
  * movers.
+ * @author by Justin Aaron Kelley (997351).
  * */
-
-import java.util.ArrayList;
-
 public abstract class Mover extends Actor{
 
     // Directions as constants set up as a modulus 4 number system.

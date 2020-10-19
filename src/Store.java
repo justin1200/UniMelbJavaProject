@@ -1,12 +1,11 @@
-/**
- * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
- * @author by Justin Aaron Kelley (997351).
- * This represents a place where fruit is stored by actors like gatherers or thiefs in the simulation. These locations
- * are intially empty and act as points of storing gathered fruit.
- * */
-
 import bagel.Image;
 
+/**
+ * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
+ * This represents a place where fruit is stored by actors like gatherers or thiefs in the simulation. These locations
+ * are intially empty and act as points of storing gathered fruit.
+ * @author by Justin Aaron Kelley (997351).
+ * */
 public class Store extends Storage {
 
     /**

@@ -1,10 +1,9 @@
 /**
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
- * @author by Justin Aaron Kelley (997351).
  * This class represents an actor that is stationary and has no specifc behaviour such as movement or being able
  * to store fruit. Any actions related to these actors depends on that Actor landing on this Actor.
+ * @author by Justin Aaron Kelley (997351).
  * */
-
 public class StationaryActor extends Actor{
 
     /**
