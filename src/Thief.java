@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
  * This class handles the functionality for a thief including the logic for updating it every tick. A Thief will
  * take fruit from any Actor that stores fruit and it will attempt to store this at a Hoard.
- * @author by Justin Aaron Kelley (997351).
+ * @author by Justin Kelley.
  * */
 public class Thief extends Mover {
 
