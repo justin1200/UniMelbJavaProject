@@ -7,7 +7,7 @@ import java.io.BufferedReader;
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2)
  * This class stores the actors in the simulation and handles the operations related to loading them from a file and
  * updating or checking their states each tick.
- * @author by Justin Aaron Kelley (997351).
+ * @author by Justin Kelley.
  * */
 public class World {
 
