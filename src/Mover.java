@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * This class represents a general Mover in the simulation, which is able to move every tick and performs actions
  * depending on what it moves onto. This class contains methods for checking and performing common status/behaviour of
  * movers.
- * @author by Justin Aaron Kelley (997351).
+ * @author by Justin Kelley.
  * */
 public abstract class Mover extends Actor{
 
