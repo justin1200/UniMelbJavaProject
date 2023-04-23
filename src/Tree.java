@@ -4,7 +4,7 @@ import bagel.Image;
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
  * This class represents a normal or golden tree in the simulation, which hold fruit. An actor capable of taking fruit
  * can take fruit from a tree. A tree acts as a place where fruit is intially located at and can be taken from.
- * @author by Justin Aaron Kelley (997351).
+ * @author by Justin Kelley.
  * */
 public class Tree extends Storage{
 
