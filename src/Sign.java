@@ -4,7 +4,7 @@ import bagel.Image;
  * Implementation for Project 2 for SWEN20003 Object Oriented Software Development (Semester 2).
  * This class represents a sign in the simulation, which points in a direction. A Mover will change its direction
  * in the direction the sign faces in.
- * @author by Justin Aaron Kelley (997351).
+ * @author by Justin Kelley.
  * */
 public class Sign extends Actor{
 
